@@ -1,0 +1,18 @@
+# Sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editores
+.vscode/
+.idea/
+*.swp
+
+# Dependências e build (o projeto não usa, mas evita sujeira)
+node_modules/
+dist/
+build/
+.cache/
+
+# Logs
+*.log

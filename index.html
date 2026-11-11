@@ -1,1 +1,581 @@
+<!doctype html>
+<html lang="pt-BR" data-perf="high">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#05060a">
+<meta name="description" content="Game ONN Prime — galeria privada de jogos para navegador. Login administrativo, catálogo editável e jogos que abrem em um clique.">
+<meta name="robots" content="noindex, nofollow">
+<title>Game ONN Prime — Galeria de Jogos</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='15' fill='%23c8ff2e'/%3E%3Cpath d='M25 19.5v25L47 32z' fill='%2305060a'/%3E%3C/svg%3E">
+<link rel="preload" href="assets/fonts/space-grotesk-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/space-grotesk-600.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/img/hero.jpg" as="image">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
 
+<a class="skip" href="#conteudo">Pular para o conteúdo</a>
+
+<div class="bg-fx" aria-hidden="true">
+  <span class="bg-fx__glow bg-fx__glow--lime"></span>
+  <span class="bg-fx__glow bg-fx__glow--violet"></span>
+  <span class="bg-fx__grid"></span>
+</div>
+
+<!-- Ícones reutilizáveis -->
+<svg class="sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.4v13.2L19 12z" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-external" viewBox="0 0 24 24"><path d="M14 4h6v6"/><path d="M20 4 10.5 13.5"/><path d="M18 14.5V19a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h4.5"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4.5 21c.5-4 3.7-6.3 7.5-6.3S19 17 19.5 21"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4.5" y="10" width="15" height="11" rx="2.6"/><path d="M8 10V7.2a4 4 0 0 1 8 0V10"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-eye-off" viewBox="0 0 24 24"><path d="m3 3 18 18"/><path d="M10.6 5.7A11 11 0 0 1 12 5.5c6 0 9.5 6.5 9.5 6.5a17 17 0 0 1-2.6 3.5"/><path d="M6.5 7.3C4 9.2 2.5 12 2.5 12S6 18.5 12 18.5a10.5 10.5 0 0 0 4.4-1"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 0-2.6 6.3"/><path d="M20 4.5V11h-6.5"/></symbol>
+  <symbol id="i-expand" viewBox="0 0 24 24"><path d="M8.5 3H3v5.5M15.5 3H21v5.5M21 15.5V21h-5.5M3 15.5V21h5.5"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16"/><path d="M9.5 7V5.2c0-.7.5-1.2 1.2-1.2h2.6c.7 0 1.2.5 1.2 1.2V7"/><path d="m6.5 7 .9 13h9.2l.9-13"/><path d="M10.5 11v5M13.5 11v5"/></symbol>
+  <symbol id="i-edit" viewBox="0 0 24 24"><path d="M4 20h4.2L20 8.2a2.3 2.3 0 0 0-3.2-3.2L5 16.8z"/><path d="m14.5 6.5 3 3"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3.5v11.5"/><path d="m7.5 10.5 4.5 4.5 4.5-4.5"/><path d="M5 20h14"/></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24"><path d="M15 5.5 8 12l7 6.5"/></symbol>
+  <symbol id="i-logout" viewBox="0 0 24 24"><path d="M10 4H6.5A2.5 2.5 0 0 0 4 6.5v11A2.5 2.5 0 0 0 6.5 20H10"/><path d="m16 8 4 4-4 4"/><path d="M20 12H9.5"/></symbol>
+  <symbol id="i-key" viewBox="0 0 24 24"><circle cx="7.5" cy="15.5" r="4"/><path d="m10.6 12.7 8.9-8.9"/><path d="m16.5 3.5 4 4"/><path d="m14 6 4 4"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 5 5.8v6.1c0 4.4 3 7.4 7 9.1 4-1.7 7-4.7 7-9.1V5.8z"/><path d="m9 11.8 2.1 2.1 4-4.1"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.6 4.6 4.4L19 7"/></symbol>
+  <symbol id="i-gamepad" viewBox="0 0 24 24"><path d="M7.4 8h9.2a4.8 4.8 0 0 1 4.7 5.7l-.6 3a2.4 2.4 0 0 1-4.3 1L14.8 15H9.2l-1.6 2.7a2.4 2.4 0 0 1-4.3-1l-.6-3A4.8 4.8 0 0 1 7.4 8Z"/><path d="M7.8 10.8v2.4M6.6 12h2.4"/><circle cx="15.6" cy="11.2" r="1" fill="currentColor" stroke="none"/><circle cx="17.6" cy="13.2" r="1" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h15"/><path d="m13 6 6 6-6 6"/></symbol>
+  <symbol id="i-spark" viewBox="0 0 24 24"><path d="m12 3 1.9 5.6L19.5 10.5l-5.6 1.9L12 18l-1.9-5.6L4.5 10.5l5.6-1.9z"/><path d="M18.5 16.5l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7z"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 4 3 20h18z"/><path d="M12 10v4.2M12 17.2h.01"/></symbol>
+  <symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="9.5" r="1.6"/><path d="m4.5 17.5 4.7-4.7 3.8 3.8 2.7-2.7 3.8 3.8"/></symbol>
+  <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13.5a5 5 0 0 0 7.1 0l2-2a5 5 0 0 0-7.1-7.1l-1 1"/><path d="M14 10.5a5 5 0 0 0-7.1 0l-2 2a5 5 0 0 0 7.1 7.1l1-1"/></symbol>
+  <symbol id="i-monitor" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12.5" rx="2.4"/><path d="M8.5 20.5h7M12 16.5v4"/></symbol>
+  <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2.5 5 14h5.6L10 21.5 19 10h-6z"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 4 2.5 5.2 5.5.8-4 4 .9 5.6-4.9-2.7-4.9 2.7.9-5.6-4-4 5.5-.8z"/></symbol>
+</svg>
+
+<!-- Splash -->
+<div class="splash" id="splash">
+  <div class="splash__mark"><svg><use href="#i-play"/></svg></div>
+  <p class="splash__name">GAME ONN <em>PRIME</em></p>
+  <p class="splash__hint">Preparando seu arcade…</p>
+</div>
+
+<main class="app" id="app">
+
+  <!-- ===================== TELA DE LOGIN ===================== -->
+  <section class="view view--auth" id="view-login" hidden>
+    <div class="auth">
+      <aside class="auth__art">
+        <img class="auth__art-img" src="assets/img/hero.jpg" alt="" width="1600" height="893">
+        <div class="auth__art-scrim"></div>
+        <div class="auth__art-top">
+          <a class="brand" href="./" aria-label="Game ONN Prime">
+            <span class="brand__mark"><svg><use href="#i-play"/></svg></span>
+            <span class="brand__text">GAME ONN <em>PRIME</em></span>
+          </a>
+          <span class="pill pill--outline"><span class="dot"></span> Acesso restrito</span>
+        </div>
+        <div class="auth__art-bottom">
+          <p class="eyebrow">Seu arcade particular</p>
+          <h1 class="auth__headline">A galeria de jogos que <span>abre na hora</span>.</h1>
+          <p class="auth__sub">Um catálogo feito sob medida: capa, link direto e partida em um clique, tudo rodando direto no navegador.</p>
+          <ul class="auth__stats">
+            <li><strong id="stat-games">0</strong><span>jogos no catálogo</span></li>
+            <li><strong>100%</strong><span>no navegador</span></li>
+            <li><strong>0</strong><span>downloads</span></li>
+          </ul>
+        </div>
+      </aside>
+
+      <div class="auth__panel">
+        <div class="auth__panel-inner">
+          <div class="auth__mobile-brand">
+            <a class="brand" href="./">
+              <span class="brand__mark"><svg><use href="#i-play"/></svg></span>
+              <span class="brand__text">GAME ONN <em>PRIME</em></span>
+            </a>
+          </div>
+
+          <ol class="steps" aria-label="Etapas de acesso">
+            <li class="is-active"><span>1</span> Login</li>
+            <li><span>2</span> Segurança</li>
+            <li><span>3</span> Galeria</li>
+          </ol>
+
+          <div class="auth__head">
+            <h2>Bem-vindo de volta</h2>
+            <p>Entre com seu acesso de administrador para abrir a galeria.</p>
+          </div>
+
+          <form class="form" id="login-form" novalidate autocomplete="on">
+            <div class="field">
+              <label for="login-id">E-mail ou usuário</label>
+              <div class="input">
+                <svg class="input__icon" aria-hidden="true"><use href="#i-user"/></svg>
+                <input id="login-id" name="login-id" type="text" inputmode="email" autocomplete="username" placeholder="adm" spellcheck="false" required aria-describedby="login-error">
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="login-pass">Senha</label>
+              <div class="input">
+                <svg class="input__icon" aria-hidden="true"><use href="#i-lock"/></svg>
+                <input id="login-pass" name="login-pass" type="password" autocomplete="current-password" placeholder="Sua senha" required aria-describedby="login-error">
+                <button class="peek" type="button" data-peek="login-pass" aria-label="Mostrar senha" aria-pressed="false"><svg><use href="#i-eye"/></svg></button>
+              </div>
+            </div>
+
+            <div class="form__row">
+              <label class="check">
+                <input type="checkbox" id="login-remember" checked>
+                <span>Manter conectado</span>
+              </label>
+              <button type="button" class="linkbtn" id="forgot-btn">Esqueci a senha</button>
+            </div>
+
+            <p class="form-error" id="login-error" role="alert" hidden></p>
+
+            <button class="btn btn--primary btn--block" type="submit" id="login-submit">
+              Entrar na galeria <svg><use href="#i-arrow"/></svg>
+            </button>
+          </form>
+
+          <div class="hint-card" id="default-hint" hidden>
+            <div class="hint-card__icon"><svg><use href="#i-key"/></svg></div>
+            <div>
+              <strong>Primeiro acesso</strong>
+              <p>Use <code>adm</code> no e-mail e <code>adm</code> na senha. Depois o sistema pede para criar seu acesso definitivo.</p>
+            </div>
+            <button class="btn btn--tiny" type="button" id="fill-default">Preencher</button>
+          </div>
+
+          <p class="fineprint"><svg><use href="#i-shield"/></svg> Ambiente administrativo · suas credenciais ficam apenas neste dispositivo.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== TELA DE TROCA DE ACESSO ===================== -->
+  <section class="view view--setup" id="view-setup" hidden>
+    <div class="setup">
+      <div class="setup__art" aria-hidden="true">
+        <div class="setup__art-glow"></div>
+        <div class="setup__badge"><svg><use href="#i-shield"/></svg></div>
+        <h2 id="setup-art-title">Seu acesso,<br>suas regras.</h2>
+        <p>Troque o padrão <code>adm / adm</code> por um e-mail e uma senha só seus. É rápido e obrigatório no primeiro acesso.</p>
+        <ul class="setup__list">
+          <li><svg><use href="#i-check"/></svg> Login antigo deixa de funcionar</li>
+          <li><svg><use href="#i-check"/></svg> Senha guardada com hash + salt</li>
+          <li><svg><use href="#i-check"/></svg> Sessão segura neste dispositivo</li>
+        </ul>
+      </div>
+
+      <div class="setup__panel">
+        <div class="setup__panel-inner">
+          <button class="backlink" type="button" id="setup-back" hidden>
+            <svg><use href="#i-back"/></svg> Voltar para a galeria
+          </button>
+
+          <ol class="steps steps--setup" aria-label="Etapas de acesso">
+            <li class="is-done"><span><svg><use href="#i-check"/></svg></span> Login</li>
+            <li class="is-active"><span>2</span> Segurança</li>
+            <li><span>3</span> Galeria</li>
+          </ol>
+
+          <div class="auth__head">
+            <h2 id="setup-title">Crie seu acesso definitivo</h2>
+            <p id="setup-sub">Substitua o usuário e a senha padrão. Você vai entrar na galeria logo depois de salvar.</p>
+          </div>
+
+          <form class="form" id="setup-form" novalidate>
+            <div class="field">
+              <label for="setup-id">Novo e-mail (ou usuário)</label>
+              <div class="input">
+                <svg class="input__icon" aria-hidden="true"><use href="#i-user"/></svg>
+                <input id="setup-id" name="setup-id" type="text" autocomplete="username" placeholder="voce@exemplo.com" spellcheck="false" required aria-describedby="setup-error">
+              </div>
+              <p class="field__hint">Aceita e-mail completo ou um usuário de 3 a 32 caracteres.</p>
+            </div>
+
+            <div class="field">
+              <label for="setup-pass">Nova senha</label>
+              <div class="input">
+                <svg class="input__icon" aria-hidden="true"><use href="#i-lock"/></svg>
+                <input id="setup-pass" name="setup-pass" type="password" autocomplete="new-password" placeholder="Mínimo de 6 caracteres" required aria-describedby="setup-error">
+                <button class="peek" type="button" data-peek="setup-pass" aria-label="Mostrar senha" aria-pressed="false"><svg><use href="#i-eye"/></svg></button>
+              </div>
+              <div class="strength" id="strength" data-level="0" aria-hidden="true">
+                <span></span><span></span><span></span><span></span>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="setup-pass2">Confirmar nova senha</label>
+              <div class="input">
+                <svg class="input__icon" aria-hidden="true"><use href="#i-lock"/></svg>
+                <input id="setup-pass2" name="setup-pass2" type="password" autocomplete="new-password" placeholder="Repita a senha" required aria-describedby="setup-error">
+                <button class="peek" type="button" data-peek="setup-pass2" aria-label="Mostrar senha" aria-pressed="false"><svg><use href="#i-eye"/></svg></button>
+              </div>
+            </div>
+
+            <p class="form-error" id="setup-error" role="alert" hidden></p>
+
+            <button class="btn btn--primary btn--block" type="submit" id="setup-submit">
+              Salvar acesso e entrar <svg><use href="#i-arrow"/></svg>
+            </button>
+            <p class="fineprint"><svg><use href="#i-shield"/></svg> Guarde bem seus dados: não há recuperação por e-mail neste projeto.</p>
+          </form>
+
+          <button type="button" class="linkbtn linkbtn--danger" id="setup-reset">Esqueci e quero voltar ao padrão adm / adm</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== GALERIA ===================== -->
+  <section class="view view--app" id="view-gallery" hidden>
+    <header class="topbar">
+      <div class="topbar__inner">
+        <a class="brand brand--sm" href="./" aria-label="Game ONN Prime">
+          <span class="brand__mark"><svg><use href="#i-play"/></svg></span>
+          <span class="brand__text">GAME ONN <em>PRIME</em></span>
+        </a>
+
+        <nav class="topnav" aria-label="Navegação principal">
+          <span class="topnav__link is-active">Galeria</span>
+          <button class="topnav__link" type="button" data-goto-admin>Catálogo</button>
+          <a class="topnav__link" href="#conteudo">Biblioteca</a>
+        </nav>
+
+        <div class="topbar__right">
+          <span class="env-chip"><span class="dot"></span> Admin</span>
+          <div class="usermenu">
+            <button class="usermenu__btn" type="button" id="user-btn" aria-haspopup="menu" aria-expanded="false">
+              <span class="avatar" id="user-initials">AD</span>
+              <span class="usermenu__name" id="user-name">adm</span>
+              <svg class="usermenu__chev" aria-hidden="true"><use href="#i-back"/></svg>
+            </button>
+            <div class="menu" id="user-menu" role="menu" hidden>
+              <p class="menu__label">Acesso administrativo</p>
+              <button type="button" class="menu__item" role="menuitem" data-goto-admin><svg><use href="#i-gamepad"/></svg> Gerenciar catálogo</button>
+              <button type="button" class="menu__item" role="menuitem" id="change-access"><svg><use href="#i-key"/></svg> Alterar e-mail e senha</button>
+              <button type="button" class="menu__item" role="menuitem" id="toggle-light"><svg><use href="#i-bolt"/></svg> Modo leve <span class="switch" id="light-switch" aria-hidden="true"></span></button>
+              <div class="menu__sep"></div>
+              <button type="button" class="menu__item menu__item--danger" role="menuitem" id="logout-btn"><svg><use href="#i-logout"/></svg> Sair da conta</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="page" id="conteudo">
+      <section class="hero" id="hero" aria-label="Jogo em destaque">
+        <img class="hero__bg" id="hero-img" alt="" width="1600" height="893" fetchpriority="high">
+        <div class="hero__scrim"></div>
+        <div class="hero__inner">
+          <span class="pill pill--lime"><svg><use href="#i-spark"/></svg> Em destaque</span>
+          <h1 class="hero__title" id="hero-title">Carregando catálogo…</h1>
+          <p class="hero__desc" id="hero-desc"></p>
+          <div class="hero__meta" id="hero-meta"></div>
+          <div class="hero__actions">
+            <button class="btn btn--primary" type="button" id="hero-play"><svg><use href="#i-play"/></svg> Jogar agora</button>
+            <button class="btn btn--ghost" type="button" id="hero-manage"><svg><use href="#i-edit"/></svg> Gerenciar</button>
+          </div>
+        </div>
+        <span class="hero__index" id="hero-index">01</span>
+      </section>
+
+      <section class="library" aria-labelledby="library-title">
+        <div class="library__head">
+          <div>
+            <p class="eyebrow">Biblioteca</p>
+            <h2 id="library-title">Todos os jogos <span class="count" id="game-count">0</span></h2>
+          </div>
+          <div class="library__tools">
+            <div class="search">
+              <svg aria-hidden="true"><use href="#i-search"/></svg>
+              <input type="search" id="search" placeholder="Buscar jogo ou gênero…" aria-label="Buscar jogo ou gênero" autocomplete="off">
+              <kbd>/</kbd>
+            </div>
+            <div class="select">
+              <select id="sort" aria-label="Ordenar jogos">
+                <option value="destaque">Destaques primeiro</option>
+                <option value="az">Nome A–Z</option>
+                <option value="za">Nome Z–A</option>
+                <option value="novos">Adicionados recentemente</option>
+              </select>
+              <svg aria-hidden="true"><use href="#i-back"/></svg>
+            </div>
+            <button class="btn btn--tiny btn--ghost" type="button" data-goto-admin><svg><use href="#i-plus"/></svg> Novo jogo</button>
+          </div>
+        </div>
+
+        <div class="chips" id="genre-chips" role="group" aria-label="Filtrar por gênero"></div>
+
+        <div class="grid" id="game-grid" aria-live="polite"></div>
+
+        <div class="empty" id="empty" hidden>
+          <div class="empty__icon"><svg><use href="#i-search"/></svg></div>
+          <h3 id="empty-title">Nenhum jogo encontrado</h3>
+          <p id="empty-desc">Tente outro termo de busca ou limpe os filtros.</p>
+          <div class="empty__actions">
+            <button class="btn btn--ghost" type="button" id="empty-clear">Limpar filtros</button>
+            <button class="btn btn--primary" type="button" id="empty-add" hidden><svg><use href="#i-plus"/></svg> Adicionar jogo</button>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <div class="footer__brand">
+          <span class="brand__mark brand__mark--sm"><svg><use href="#i-play"/></svg></span>
+          <div>
+            <strong>GAME ONN PRIME</strong>
+            <p>Galeria privada de jogos para navegador.</p>
+          </div>
+        </div>
+        <div class="footer__meta">
+          <span><svg><use href="#i-monitor"/></svg> Otimizado para rodar leve</span>
+          <span><svg><use href="#i-gamepad"/></svg> <span id="footer-count">0</span> jogos no catálogo</span>
+        </div>
+        <p class="footer__note">Catálogo editável em <code>assets/js/games-data.js</code> · v1.0</p>
+      </footer>
+    </div>
+  </section>
+
+  <!-- ===================== PAINEL ADMIN ===================== -->
+  <section class="view view--admin" id="view-admin" hidden>
+    <header class="topbar">
+      <div class="topbar__inner">
+        <a class="brand brand--sm" href="./" aria-label="Game ONN Prime">
+          <span class="brand__mark"><svg><use href="#i-play"/></svg></span>
+          <span class="brand__text">GAME ONN <em>PRIME</em></span>
+        </a>
+        <nav class="topnav" aria-label="Navegação do painel">
+          <button class="topnav__link" type="button" data-goto-gallery><svg><use href="#i-back"/></svg> Galeria</button>
+          <span class="topnav__link is-active">Catálogo</span>
+        </nav>
+        <div class="topbar__right">
+          <span class="env-chip"><span class="dot"></span> Admin</span>
+          <button class="btn btn--tiny btn--ghost" type="button" id="admin-logout"><svg><use href="#i-logout"/></svg> Sair</button>
+        </div>
+      </div>
+    </header>
+
+    <div class="page page--admin">
+      <div class="admin-head">
+        <div>
+          <p class="eyebrow">Painel administrativo</p>
+          <h1>Catálogo de jogos</h1>
+          <p class="admin-head__sub">Adicione um jogo com o link direto e o link da capa. Ele aparece na galeria na hora.</p>
+        </div>
+        <div class="admin-head__actions">
+          <button class="btn btn--ghost" type="button" id="export-btn"><svg><use href="#i-download"/></svg> Exportar games-data.js</button>
+          <button class="btn btn--ghost" type="button" data-goto-gallery><svg><use href="#i-arrow"/></svg> Ver galeria</button>
+        </div>
+      </div>
+
+      <div class="notice">
+        <svg><use href="#i-shield"/></svg>
+        <p><strong>Como publicar:</strong> jogos adicionados pelo painel ficam salvos neste navegador. Para valer em todos os dispositivos, clique em <strong>Exportar</strong> e substitua o arquivo <code>assets/js/games-data.js</code> no repositório. O catálogo base continua funcionando sem isso.</p>
+      </div>
+
+      <div class="admin-grid">
+        <section class="panel panel--form" aria-labelledby="form-title">
+          <header class="panel__head">
+            <div>
+              <p class="eyebrow" id="form-eyebrow">Novo jogo</p>
+              <h2 id="form-title">Adicionar à galeria</h2>
+            </div>
+            <span class="pill pill--outline" id="form-mode">Novo</span>
+          </header>
+
+          <form class="form form--compact" id="game-form" novalidate>
+            <input type="hidden" id="game-original-id" value="">
+
+            <div class="field">
+              <label for="game-title">Título do jogo</label>
+              <div class="input">
+                <svg class="input__icon" aria-hidden="true"><use href="#i-gamepad"/></svg>
+                <input id="game-title" type="text" maxlength="60" placeholder="Ex.: Neon Snake" required>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="game-genre">Gênero</label>
+              <div class="input">
+                <svg class="input__icon" aria-hidden="true"><use href="#i-star"/></svg>
+                <input id="game-genre" type="text" maxlength="24" list="genre-list" placeholder="Arcade, Puzzle, Ação…">
+              </div>
+              <datalist id="genre-list">
+                <option value="Arcade"></option>
+                <option value="Puzzle"></option>
+                <option value="Ação"></option>
+                <option value="Aventura"></option>
+                <option value="Corrida"></option>
+                <option value="Esporte"></option>
+                <option value="Estratégia"></option>
+                <option value="Memória"></option>
+                <option value="Raciocínio"></option>
+                <option value="Retrô"></option>
+                <option value="3D"></option>
+                <option value="Multiplayer"></option>
+              </datalist>
+            </div>
+
+            <div class="field">
+              <label for="game-desc">Descrição curta</label>
+              <textarea id="game-desc" rows="2" maxlength="170" placeholder="Uma frase que resume o jogo."></textarea>
+            </div>
+
+            <div class="field">
+              <label for="game-link">Link direto do jogo</label>
+              <div class="input">
+                <svg class="input__icon" aria-hidden="true"><use href="#i-link"/></svg>
+                <input id="game-link" type="text" placeholder="https://site.com/jogo ou assets/games/meu-jogo/index.html" required spellcheck="false">
+              </div>
+              <p class="field__hint">Endereço que abre o jogo no navegador.</p>
+            </div>
+
+            <div class="field">
+              <label for="game-cover">Link da capa</label>
+              <div class="input">
+                <svg class="input__icon" aria-hidden="true"><use href="#i-image"/></svg>
+                <input id="game-cover" type="text" placeholder="https://site.com/capa.jpg ou assets/img/games/x.jpg" spellcheck="false">
+              </div>
+            </div>
+
+            <div class="cover-preview" id="cover-preview">
+              <img alt="Prévia da capa" id="cover-preview-img" hidden>
+              <div class="cover-preview__ph" id="cover-preview-ph">
+                <svg><use href="#i-image"/></svg>
+                <span>A prévia da capa aparece aqui</span>
+              </div>
+            </div>
+
+            <label class="check check--panel">
+              <input type="checkbox" id="game-featured">
+              <span><strong>Destacar</strong> no banner principal da galeria</span>
+            </label>
+
+            <label class="check check--panel">
+              <input type="checkbox" id="game-newtab">
+              <span><strong>Abrir em nova aba</strong> — use quando o site do jogo bloqueia incorporação</span>
+            </label>
+
+            <p class="form-error" id="game-error" role="alert" hidden></p>
+
+            <div class="form__actions">
+              <button class="btn btn--primary" type="submit"><svg><use href="#i-check"/></svg> Salvar jogo</button>
+              <button class="btn btn--ghost" type="button" id="game-cancel" hidden>Cancelar</button>
+            </div>
+          </form>
+        </section>
+
+        <section class="panel panel--list" aria-labelledby="list-title">
+          <header class="panel__head">
+            <div>
+              <p class="eyebrow">Jogos cadastrados</p>
+              <h2 id="list-title">Seu catálogo <span class="count" id="admin-count">0</span></h2>
+            </div>
+            <button class="btn btn--tiny btn--ghost" type="button" id="reset-btn"><svg><use href="#i-refresh"/></svg> Restaurar do arquivo</button>
+          </header>
+
+          <ul class="rows" id="admin-list"></ul>
+
+          <div class="admin-legend">
+            <span><i class="dot dot--lime"></i> Do arquivo <code>games-data.js</code></span>
+            <span><i class="dot dot--violet"></i> Salvo neste navegador</span>
+          </div>
+        </section>
+      </div>
+
+      <section class="admin-tips">
+        <article class="tip">
+          <div class="tip__icon"><svg><use href="#i-bolt"/></svg></div>
+          <h3>Rodando leve</h3>
+          <p>As capas carregam sob demanda e o jogo só é carregado quando você clica em jogar. Ao fechar, o iframe é descarregado para liberar memória.</p>
+        </article>
+        <article class="tip">
+          <div class="tip__icon"><svg><use href="#i-link"/></svg></div>
+          <h3>Links que funcionam</h3>
+          <p>Use links <code>https</code> ou caminhos internos do projeto. Se o site do jogo não abrir dentro da galeria, marque “Abrir em nova aba”.</p>
+        </article>
+        <article class="tip">
+          <div class="tip__icon"><svg><use href="#i-key"/></svg></div>
+          <h3>Acesso atual</h3>
+          <p id="admin-access-label">—</p>
+          <button class="linkbtn" type="button" id="change-access-2">Alterar e-mail e senha</button>
+        </article>
+      </section>
+    </div>
+  </section>
+
+</main>
+
+<!-- ===================== PLAYER ===================== -->
+<div class="player" id="player" hidden role="dialog" aria-modal="true" aria-labelledby="player-title">
+  <div class="player__bar">
+    <div class="player__info">
+      <span class="player__dot" aria-hidden="true"></span>
+      <div>
+        <h2 id="player-title">Jogo</h2>
+        <p id="player-meta">—</p>
+      </div>
+    </div>
+    <div class="player__actions">
+      <span class="player__timer" id="player-timer" hidden></span>
+      <button class="icon-btn" type="button" id="player-reload" title="Recarregar jogo" aria-label="Recarregar jogo"><svg><use href="#i-refresh"/></svg></button>
+      <button class="icon-btn" type="button" id="player-newtab" title="Abrir em nova aba" aria-label="Abrir em nova aba"><svg><use href="#i-external"/></svg></button>
+      <button class="icon-btn" type="button" id="player-full" title="Tela cheia" aria-label="Tela cheia"><svg><use href="#i-expand"/></svg></button>
+      <button class="icon-btn icon-btn--close" type="button" id="player-close" title="Fechar (Esc)" aria-label="Fechar jogo"><svg><use href="#i-close"/></svg></button>
+    </div>
+  </div>
+
+  <div class="player__stage" id="player-stage">
+    <div class="player__loading" id="player-loading">
+      <span class="spinner" aria-hidden="true"></span>
+      <p>Carregando <strong id="player-loading-name">jogo</strong>…</p>
+      <small>Rodando direto no navegador</small>
+    </div>
+    <iframe id="player-frame" title="Jogo" allow="fullscreen; autoplay; gamepad; accelerometer; gyroscope; clipboard-write; encrypted-media" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+    <div class="player__fallback" id="player-fallback" hidden>
+      <svg><use href="#i-alert"/></svg>
+      <p>O jogo está demorando ou o site bloqueia incorporação.</p>
+      <button class="btn btn--primary btn--tiny" type="button" id="player-open-external">Abrir em nova aba <svg><use href="#i-external"/></svg></button>
+    </div>
+  </div>
+
+  <div class="player__foot">
+    <span><kbd>Esc</kbd> para fechar</span>
+    <span><svg><use href="#i-gamepad"/></svg> Dica: clique dentro do jogo antes de usar o teclado</span>
+    <a href="#" id="player-url" target="_blank" rel="noopener noreferrer">Abrir endereço do jogo</a>
+  </div>
+</div>
+
+<!-- ===================== CONFIRM DIALOG ===================== -->
+<dialog class="dialog" id="confirm-dialog">
+  <form method="dialog" class="dialog__form">
+    <div class="dialog__icon" id="confirm-icon"><svg><use href="#i-alert"/></svg></div>
+    <h2 id="confirm-title">Confirmar</h2>
+    <p id="confirm-message">Tem certeza?</p>
+    <div class="dialog__actions">
+      <button class="btn btn--ghost" value="cancel" type="submit">Cancelar</button>
+      <button class="btn btn--danger" value="ok" type="submit" id="confirm-ok">Confirmar</button>
+    </div>
+  </form>
+</dialog>
+
+<div class="toasts" id="toasts" aria-live="polite" aria-atomic="false"></div>
+
+<noscript>
+  <div class="noscript">Este projeto precisa de JavaScript ativado para funcionar.</div>
+</noscript>
+
+<script src="assets/js/games-data.js" defer></script>
+<script src="assets/js/store.js" defer></script>
+<script src="assets/js/app.js" defer></script>
+</body>
+</html>
