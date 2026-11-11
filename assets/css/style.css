@@ -525,6 +525,16 @@ textarea:focus {
   box-shadow: 0 40px 100px -50px #000;
 }
 .hero__bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; }
+.hero--empty { min-height: 320px; }
+.hero--empty::before {
+  content: "";
+  position: absolute; inset: 0; z-index: -2;
+  background:
+    radial-gradient(ellipse 55% 70% at 80% 20%, rgba(200, 255, 46, 0.16), transparent 65%),
+    radial-gradient(ellipse 45% 60% at 15% 90%, rgba(154, 139, 255, 0.14), transparent 65%),
+    linear-gradient(150deg, #10151c, #070a0f);
+}
+.hero--empty::after { background: linear-gradient(90deg, transparent, rgba(200, 255, 46, 0.3), transparent); }
 .hero__scrim {
   position: absolute; inset: 0; z-index: -1;
   background:
@@ -645,6 +655,14 @@ textarea:focus {
 .empty h3 { font-size: 16px; margin-bottom: 5px; }
 .empty p { font-size: 13px; color: var(--muted-2); margin-bottom: 16px; }
 .empty__actions { display: flex; gap: 9px; justify-content: center; flex-wrap: wrap; }
+.empty--first { border-style: solid; border-color: rgba(200, 255, 46, 0.18); background: radial-gradient(ellipse 60% 90% at 50% 0%, rgba(200, 255, 46, 0.05), transparent 70%), rgba(255, 255, 255, 0.015); padding: 64px 24px; }
+.empty--first .empty__icon { width: 56px; height: 56px; border-radius: 17px; background: rgba(200, 255, 46, 0.1); border: 1px solid rgba(200, 255, 46, 0.28); color: var(--lime); }
+.empty--first .empty__icon svg { width: 24px; height: 24px; }
+.empty--first h3 { font-size: 21px; letter-spacing: -0.03em; }
+.empty__steps { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--line); }
+.empty__steps span { display: inline-flex; align-items: center; gap: 7px; font-size: 11.5px; color: var(--muted-2); }
+.empty__steps b { display: grid; place-items: center; width: 18px; height: 18px; border-radius: 50%; background: rgba(200, 255, 46, 0.12); border: 1px solid rgba(200, 255, 46, 0.3); color: var(--lime); font-size: 9.5px; }
+.library--empty .library__head { margin-bottom: 0; }
 
 /* Footer */
 .footer {

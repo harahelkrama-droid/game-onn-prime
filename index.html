@@ -292,7 +292,7 @@
         <div class="library__head">
           <div>
             <p class="eyebrow">Biblioteca</p>
-            <h2 id="library-title">Todos os jogos <span class="count" id="game-count">0</span></h2>
+            <h2 id="library-title"><span id="library-title-text">Todos os jogos</span> <span class="count" id="game-count">0</span></h2>
           </div>
           <div class="library__tools">
             <div class="search">
@@ -318,12 +318,17 @@
         <div class="grid" id="game-grid" aria-live="polite"></div>
 
         <div class="empty" id="empty" hidden>
-          <div class="empty__icon"><svg><use href="#i-search"/></svg></div>
+          <div class="empty__icon" id="empty-icon"><svg><use href="#i-search"/></svg></div>
           <h3 id="empty-title">Nenhum jogo encontrado</h3>
           <p id="empty-desc">Tente outro termo de busca ou limpe os filtros.</p>
           <div class="empty__actions">
             <button class="btn btn--ghost" type="button" id="empty-clear">Limpar filtros</button>
-            <button class="btn btn--primary" type="button" id="empty-add" hidden><svg><use href="#i-plus"/></svg> Adicionar jogo</button>
+            <button class="btn btn--primary" type="button" id="empty-add" hidden><svg><use href="#i-plus"/></svg> Adicionar meu primeiro jogo</button>
+          </div>
+          <div class="empty__steps" id="empty-steps" hidden>
+            <span><b>1</b> Título e gênero</span>
+            <span><b>2</b> Link do jogo</span>
+            <span><b>3</b> Link da capa</span>
           </div>
         </div>
       </section>
@@ -434,16 +439,16 @@
               <label for="game-link">Link direto do jogo</label>
               <div class="input">
                 <svg class="input__icon" aria-hidden="true"><use href="#i-link"/></svg>
-                <input id="game-link" type="text" placeholder="https://site.com/jogo ou assets/games/meu-jogo/index.html" required spellcheck="false">
+                <input id="game-link" type="text" placeholder="https://site-do-jogo.com/jogar" required spellcheck="false">
               </div>
-              <p class="field__hint">Endereço que abre o jogo no navegador.</p>
+              <p class="field__hint">LINK DIRETO do jogo — o endereço que abre a partida no navegador.</p>
             </div>
 
             <div class="field">
-              <label for="game-cover">Link da capa</label>
+              <label for="game-cover">Link da capa (imagem)</label>
               <div class="input">
                 <svg class="input__icon" aria-hidden="true"><use href="#i-image"/></svg>
-                <input id="game-cover" type="text" placeholder="https://site.com/capa.jpg ou assets/img/games/x.jpg" spellcheck="false">
+                <input id="game-cover" type="text" placeholder="https://site.com/capa.jpg" spellcheck="false">
               </div>
             </div>
 
@@ -500,8 +505,8 @@
         </article>
         <article class="tip">
           <div class="tip__icon"><svg><use href="#i-link"/></svg></div>
-          <h3>Links que funcionam</h3>
-          <p>Use links <code>https</code> ou caminhos internos do projeto. Se o site do jogo não abrir dentro da galeria, marque “Abrir em nova aba”.</p>
+          <h3>Seus links, seu catálogo</h3>
+          <p>Cole o endereço completo do jogo e da imagem de capa (começando com <code>https://</code>). Se o site do jogo não abrir dentro da galeria, marque “Abrir em nova aba”.</p>
         </article>
         <article class="tip">
           <div class="tip__icon"><svg><use href="#i-key"/></svg></div>
