@@ -393,19 +393,32 @@
 
   function renderHero() {
     var game = state.hero;
+    el.hero.hidden = !game;
     if (!game) {
-      el.heroTitle.textContent = "Seu catálogo começa agora";
-      el.heroDesc.textContent = "Nenhum jogo cadastrado ainda. Abra o painel do catálogo e adicione o primeiro.";
-      el.heroMeta.innerHTML = "";
+      el.hero.classList.add("hero--empty");
+      el.heroImg.hidden = true;
+      el.heroImg.removeAttribute("src");
+      el.heroImg.alt = "";
+      el.heroTitle.textContent = "Sua galeria começa aqui";
+      el.heroDesc.textContent = "Nenhum jogo cadastrado ainda. Adicione o primeiro com o link direto do jogo e o link da capa.";
+      el.heroMeta.innerHTML =
+        '<span class="pill pill--outline">' + icon("link") + " Link do jogo</span>" +
+        '<span class="sep"></span>' +
+        '<span class="pill pill--outline">' + icon("image") + " Link da capa</span>";
       el.heroPlay.hidden = true;
       el.heroManage.hidden = false;
-      el.heroImg.src = "assets/img/hero.jpg";
-      el.heroImg.alt = "";
       el.heroIndex.textContent = "00";
       return;
     }
+    el.hero.hidden = false;
+    el.hero.classList.remove("hero--empty");
+    el.heroImg.hidden = false;
     el.heroPlay.hidden = false;
     el.heroManage.hidden = false;
+    el.heroImg.onerror = function () {
+      el.heroImg.hidden = true;
+      el.hero.classList.add("hero--empty");
+    };
     el.heroImg.src = safeUrl(game.cover) || "assets/img/hero.jpg";
     el.heroImg.alt = "Capa de " + game.title;
     el.heroTitle.textContent = game.title;
@@ -425,6 +438,14 @@
     el.gameGrid.innerHTML = "";
     el.empty.hidden = list.length > 0;
     var noGames = state.games.length === 0;
+    el.libraryTools.hidden = noGames;
+    el.genreChips.hidden = noGames;
+    el.library.classList.toggle("library--empty", noGames);
+    el.libraryTitleText.textContent = noGames ? "Sua biblioteca" : "Todos os jogos";
+    el.emptyDesc.textContent = noGames ? "Cadastre o primeiro jogo com o link direto e o link da capa. Leva menos de um minuto." : "Tente outro termo de busca ou limpe os filtros.";
+    el.empty.classList.toggle("empty--first", noGames);
+    el.emptySteps.hidden = !noGames;
+    el.emptyIcon.innerHTML = noGames ? icon("gamepad") : icon("search");
     el.emptyTitle.textContent = noGames ? "Seu catálogo está vazio" : "Nenhum jogo encontrado";
     el.emptyDesc.textContent = noGames
       ? "Abra o painel do catálogo e cadastre o primeiro jogo com link e capa."
@@ -1013,6 +1034,12 @@
     el.gameGrid = $("#game-grid");
     el.empty = $("#empty");
     el.emptyClear = $("#empty-clear");
+    el.libraryTools = $(".library__tools");
+    el.library = $(".library");
+    el.emptySteps = $("#empty-steps");
+    el.emptyIcon = $("#empty-icon");
+    el.libraryTitleText = $("#library-title-text");
+    el.libraryHead = $("#library-head");
     el.emptyAdd = $("#empty-add");
     el.emptyTitle = $("#empty-title");
     el.emptyDesc = $("#empty-desc");
