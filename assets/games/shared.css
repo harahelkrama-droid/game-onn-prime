@@ -1,0 +1,160 @@
+/* ==========================================================================
+   GAME ONN PRIME — base compartilhada dos jogos internos
+   ========================================================================== */
+@font-face {
+  font-family: "Space Grotesk";
+  src: url("../fonts/space-grotesk-400.woff2") format("woff2");
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Space Grotesk";
+  src: url("../fonts/space-grotesk-600.woff2") format("woff2");
+  font-weight: 600; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Space Grotesk";
+  src: url("../fonts/space-grotesk-700.woff2") format("woff2");
+  font-weight: 700; font-style: normal; font-display: swap;
+}
+
+:root {
+  --bg: #05060a;
+  --panel: #0b0e14;
+  --line: rgba(255, 255, 255, 0.1);
+  --text: #eef1ea;
+  --muted: #8d948b;
+  --lime: #c8ff2e;
+  --violet: #9a8bff;
+  --danger: #ff5f57;
+  --font: "Space Grotesk", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  color-scheme: dark;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body { height: 100%; }
+body {
+  display: flex; flex-direction: column; align-items: center;
+  min-height: 100svh;
+  background:
+    radial-gradient(ellipse 70% 45% at 50% -10%, rgba(200, 255, 46, 0.10), transparent 70%),
+    radial-gradient(ellipse 60% 40% at 90% 110%, rgba(154, 139, 255, 0.10), transparent 70%),
+    var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  overflow: hidden;
+  user-select: none;
+  padding: 12px;
+  gap: 10px;
+}
+img, canvas, svg { display: block; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+
+/* Barra superior */
+.hud {
+  width: 100%; max-width: 560px;
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  flex-wrap: wrap;
+}
+.hud__brand { display: flex; align-items: center; gap: 8px; }
+.hud__mark {
+  width: 26px; height: 26px; border-radius: 8px; display: grid; place-items: center;
+  background: var(--lime); color: #05060a; font-size: 11px; font-weight: 700;
+  flex-shrink: 0;
+}
+.hud__name { font-size: 10.5px; font-weight: 600; letter-spacing: 0.16em; color: var(--muted); }
+.hud__name b { color: var(--text); font-weight: 700; }
+.hud__stats { display: flex; align-items: center; gap: 8px; }
+.stat {
+  min-width: 68px; padding: 5px 11px; border-radius: 9px;
+  border: 1px solid var(--line); background: rgba(255, 255, 255, 0.04);
+  text-align: right;
+}
+.stat small { display: block; font-size: 8.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+.stat strong { font-size: 15px; font-weight: 600; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+.stat--accent { border-color: rgba(200, 255, 46, 0.3); background: rgba(200, 255, 46, 0.08); }
+.stat--accent strong { color: var(--lime); }
+
+/* Palco do jogo */
+.stage {
+  position: relative;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.025);
+  box-shadow: 0 30px 80px -40px #000, inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.stage canvas { display: block; touch-action: none; }
+
+/* Rodapé / dicas */
+.hint {
+  font-size: 10.5px; color: #5d645c; text-align: center; line-height: 1.5;
+  max-width: 520px;
+}
+.hint kbd {
+  font-family: var(--font); font-size: 10px; font-weight: 600; color: var(--muted);
+  padding: 1px 5px; border-radius: 5px;
+  background: rgba(255, 255, 255, 0.06); border: 1px solid var(--line);
+}
+
+/* Overlay */
+.overlay {
+  position: absolute; inset: 0; z-index: 10;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 10px; padding: 22px; text-align: center;
+  background: rgba(5, 6, 10, 0.78);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+  transition: opacity 0.2s ease, visibility 0.2s;
+}
+.overlay[hidden] { display: none; }
+.overlay__badge {
+  width: 46px; height: 46px; border-radius: 14px; display: grid; place-items: center;
+  background: rgba(200, 255, 46, 0.12); border: 1px solid rgba(200, 255, 46, 0.32);
+  color: var(--lime); font-size: 20px;
+}
+.overlay h1 { font-size: 22px; font-weight: 600; letter-spacing: -0.04em; }
+.overlay h2 { font-size: 19px; font-weight: 600; letter-spacing: -0.03em; }
+.overlay p { font-size: 12px; color: var(--muted); line-height: 1.55; max-width: 320px; }
+.overlay .big { font-size: 34px; font-weight: 700; letter-spacing: -0.05em; color: var(--lime); font-variant-numeric: tabular-nums; }
+.overlay__label { font-size: 9.5px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); }
+.overlay__row { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+  height: 40px; padding: 0 20px; border-radius: 11px;
+  font-size: 13px; font-weight: 600; white-space: nowrap;
+  transition: transform 0.15s ease, background 0.2s, border-color 0.2s;
+}
+.btn:active { transform: scale(0.97); }
+.btn--primary { background: var(--lime); color: #06070b; }
+.btn--primary:hover { background: #dcff86; }
+.btn--ghost { border: 1px solid var(--line); background: rgba(255, 255, 255, 0.05); color: var(--text); }
+.btn--ghost:hover { background: rgba(255, 255, 255, 0.1); }
+.btn--icon { width: 34px; height: 34px; padding: 0; border-radius: 9px; border: 1px solid var(--line); background: rgba(255, 255, 255, 0.05); font-size: 13px; }
+.btn--icon:hover { background: rgba(255, 255, 255, 0.11); }
+
+/* Controles móveis */
+.dpad { display: none; gap: 5px; grid-template-columns: repeat(3, 42px); grid-template-rows: repeat(3, 42px); }
+.dpad button {
+  border-radius: 10px; border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.055); font-size: 15px; color: var(--muted);
+  display: grid; place-items: center;
+}
+.dpad button:active { background: rgba(200, 255, 46, 0.18); color: var(--lime); }
+.dpad .up { grid-area: 1 / 2; }
+.dpad .left { grid-area: 2 / 1; }
+.dpad .right { grid-area: 2 / 3; }
+.dpad .down { grid-area: 3 / 2; }
+.dpad .mid { grid-area: 2 / 2; border: 0; background: none; }
+
+@media (hover: none) and (pointer: coarse) {
+  .dpad { display: grid; }
+  .hint--keys { display: none; }
+}
+@media (max-width: 540px) {
+  body { padding: 8px; gap: 8px; }
+  .stat { min-width: 58px; padding: 4px 9px; }
+  .stat strong { font-size: 13.5px; }
+  .hint { font-size: 10px; }
+}

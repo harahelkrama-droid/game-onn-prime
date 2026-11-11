@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Block Drop — Game ONN Prime</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='15' fill='%23c8ff2e'/%3E%3Cpath d='M25 19.5v25L47 32z' fill='%2305060a'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../shared.css">
+<style>
+  body { justify-content: center; }
+  .wrap { display: flex; align-items: flex-start; gap: 14px; }
+  .stage { padding: 8px; }
+  .stage canvas { width: min(64vw, 300px); height: auto; aspect-ratio: 1 / 2; }
+  .side { display: flex; flex-direction: column; gap: 10px; width: 108px; }
+  .box {
+    border: 1px solid var(--line); border-radius: 12px;
+    background: rgba(255,255,255,0.035); padding: 9px;
+  }
+  .box small { display: block; font-size: 8.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+  .box strong { font-size: 19px; font-weight: 600; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+  .box--next { display: flex; flex-direction: column; align-items: center; }
+  #next-cv { width: 76px; height: 76px; }
+  .ctrl { display: flex; flex-direction: column; gap: 6px; }
+  .btn--icon { width: 100%; height: 34px; font-size: 11px; gap: 6px; border-radius: 9px; }
+  .levels { display: flex; gap: 4px; flex-wrap: wrap; }
+  .levels button { flex: 1; height: 27px; border-radius: 7px; border: 1px solid var(--line); background: rgba(255,255,255,0.05); font-size: 11px; color: var(--muted); }
+  .levels button.on { background: var(--lime); border-color: var(--lime); color: #06070b; font-weight: 700; }
+  @media (max-width: 520px) {
+    .wrap { gap: 8px; }
+    .stage canvas { width: min(58vw, 240px); }
+    .side { width: 92px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hud">
+  <div class="hud__brand">
+    <span class="hud__mark">G</span>
+    <span class="hud__name"><b>BLOCK DROP</b> · ONN PRIME</span>
+  </div>
+  <div class="hud__stats">
+    <div class="stat"><small>Linhas</small><strong id="lines">0</strong></div>
+    <div class="stat stat--accent"><small>Pontos</small><strong id="score">0</strong></div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="stage">
+    <canvas id="cv" width="300" height="600" aria-label="Tabuleiro do Block Drop"></canvas>
+    <div class="overlay" id="start">
+      <div class="overlay__badge">▦</div>
+      <h1 style="font-size:18px">Block Drop</h1>
+      <p>Encaixe as peças e complete linhas cheias para limpar o campo.</p>
+      <button class="btn btn--primary" id="btn-start">Jogar</button>
+    </div>
+    <div class="overlay" id="pause" hidden>
+      <h2>Pausado</h2>
+      <button class="btn btn--primary" id="btn-resume">Continuar</button>
+    </div>
+    <div class="overlay" id="over" hidden>
+      <div class="overlay__label">Fim de jogo</div>
+      <div class="big" id="final">0</div>
+      <p id="over-msg">Tente de novo.</p>
+      <button class="btn btn--primary" id="btn-again">Jogar de novo</button>
+    </div>
+  </div>
+
+  <aside class="side">
+    <div class="box"><small>Nível</small><strong id="level">1</strong></div>
+    <div class="box box--next"><small>Próxima</small><canvas id="next-cv" width="76" height="76"></canvas></div>
+    <div class="ctrl">
+      <button class="btn btn--icon btn--ghost" data-act="left">◀ Girar/Esq</button>
+      <button class="btn btn--icon btn--ghost" data-act="right">Dir ▶</button>
+      <button class="btn btn--icon btn--ghost" data-act="down">▼ Descer</button>
+      <button class="btn btn--icon btn--ghost" data-act="drop">⤓ Soltar</button>
+    </div>
+    <div class="box">
+      <small>Velocidade</small>
+      <div class="levels" id="levels">
+        <button data-lvl="0" class="on">1x</button>
+        <button data-lvl="1">2x</button>
+        <button data-lvl="2">3x</button>
+      </div>
+    </div>
+  </aside>
+</main>
+
+<p class="hint hint--keys"><kbd>←</kbd> <kbd>→</kbd> mover · <kbd>↑</kbd>/<kbd>X</kbd> girar · <kbd>↓</kbd> descer · <kbd>Espaço</kbd> soltar · <kbd>P</kbd> pausar</p>
+
+<script src="game.js"></script>
+</body>
+</html>

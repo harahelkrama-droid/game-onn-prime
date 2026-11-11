@@ -1,1 +1,32 @@
+# Game ONN Prime — catálogo de jogos
+# ---------------------------------------------------------------
+# O catálogo real fica em: assets/js/games-data.js
+#
+# Você pode adicionar jogos de duas formas:
+#   1) Pelo painel do site (login → Gerenciar catálogo → Exportar games-data.js)
+#   2) Editando assets/js/games-data.js direto no repositório
+#
+# Cada jogo precisa de:
+#   id            identificador único, sem espaços
+#   title         nome exibido na galeria
+#   genre         gênero (vira filtro automaticamente)
+#   description   frase curta
+#   url           link direto para jogar (https://... ou caminho interno)
+#   cover         link da imagem de capa
+#   featured      true = banner principal
+#   openInNewTab  true = abre fora da galeria
+#   addedAt       data AAAA-MM-DD
+#
+# Exemplo:
+#   Título: Neon Snake
+#   Gênero: Arcade
+#   Jogo:   assets/games/snake/index.html
+#   Capa:   assets/img/games/snake.jpg
+# ---------------------------------------------------------------
 
+neon-snake      | Neon Snake      | Arcade  | assets/games/snake/index.html   | assets/img/games/snake.jpg   | destaque
+tile-2048       | Tile 2048       | Puzzle  | assets/games/2048/index.html    | assets/img/games/2048.jpg    |
+block-drop      | Block Drop      | Puzzle  | assets/games/blocks/index.html  | assets/img/games/blocks.jpg  |
+night-bird      | Night Bird      | Ação    | assets/games/flappy/index.html  | assets/img/games/flappy.jpg  |
+orbital-strike  | Orbital Strike  | Ação    | assets/games/space/index.html   | assets/img/games/space.jpg   |
+memory-cards    | Memory Cards    | Memória | assets/games/memory/index.html  | assets/img/games/memory.jpg  |
